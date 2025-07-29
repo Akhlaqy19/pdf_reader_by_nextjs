@@ -1,26 +1,97 @@
 @import "tailwindcss";
 
+@font-face {
+  src: url("../public/fonts/Irancell-Regular.ttf") format("ttf");
+  font-family: Irancell;
+  font-display: swap;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --text-primary-gray: #8d8d8d;
+  --text-secondary-gray: #D6D6D6;
+  --text-social-icons: #737373;
+  --text-dark-blue: #364073;
+  --text-normal-blue: #17759d;
+  --text-light-blue: #c9e4ef; */
+  /* --font-inter: var(--font-inter); */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --breakpoint-xs: 394px;
+  --font-irancell: "Irancell";
+  --font-inter: var(--font-inter);
+  --color-primary-gray: #8d8d8d;
+  --color-secondary-gray: #D6D6D6;
+  --color-light-gray: #DDDDDD;
+  --color-social-icons: #737373;
+  --color-normal-gray: #F3F3F3;
+  --color-dark-blue: #364073;
+  --color-normal-blue: #17759d;
+  --color-light-blue: #c9e4ef;
+  --inset-shadow-input: inset 0px 0px 2.3px 0px rgba(0, 0, 0, 0.1);
+  --drop-shadow-book-cover: 8px 9px 6.9px 0px rgba(0, 0, 0, 0.1);
+  --radius-xs: 3px;
+  --radius-xlg: 10px;
+  --radius-xxl: 15px;
+  --radius-2xxl: 22px;
+  --size-25: 100px;
+  --size-37: 148px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  @apply box-border m-0 p-0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply relative min-h-screen w-full text-base overflow-x-hidden;
+  @apply text-gray-900 dark:text-white;
+  @apply bg-white dark:bg-gray-900;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth transitions for theme switching */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body::before {
+  content: '';
+  @apply fixed w-full h-full top-0 bottom-0 left-0 right-0 bg-[url('/images/background.png')] bg-repeat bg-center bg-cover opacity-35 z-[-1];
+}
+
+input,
+button {
+  @apply border-none outline-none text-center;
+}
+a {
+  @apply no-underline appearance-none;
+}
+ul {
+  @apply list-none;
+}
+
+.book-cover-container {
+  width: 100px;
+  height: 148px;
+}
+
+@media (min-width: 394px) {
+  .book-cover-container {
+    width: 137px;
+    height: 203px;
+  }
+}
+
+.scrollbar {
+    scrollbar-width: auto;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+}
+
+.scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);
+}
+
+.panel-height {
+  min-height: calc(100vh - 64px);
 }
