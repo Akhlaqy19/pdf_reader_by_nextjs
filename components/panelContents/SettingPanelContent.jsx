@@ -6,7 +6,7 @@ import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import InfoBox from "@/components/InfoBox";
-import ZoomRange from "@/components/zoomRange";
+import ZoomRange from "@/components/ZoomRange";
 import ZoomOutIcon from "@/public/icons/setting-tools-icons/zoom-out.svg";
 import ZoomInIcon from "@/public/icons/setting-tools-icons/zoom-in.svg";
 import useThemeToggle from "@/components/hooks/useThemeToggle";

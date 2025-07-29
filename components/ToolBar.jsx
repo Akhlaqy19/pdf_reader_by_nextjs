@@ -7,7 +7,7 @@ import ToolsOptions from "./ToolsOptions";
 
 import { BookData, SelectedPanel } from "@/contexts/main";
 
-import Logo from "@/public/icons/Logo.svg";
+import Logo from "@/public/icons/logo.svg";
 import Info from "@/public/icons/tools-icons/info.svg";
 
 const inter = Inter({
