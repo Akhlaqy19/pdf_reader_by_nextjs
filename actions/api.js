@@ -18,7 +18,7 @@ export const getBookInfo = async (bookId) => {
 };
 
 // دریافت صفحات کتاب با pagination
-export const getBookPages = async (bookId, startPage = 1, limitPage = 10) => {
+export const getBookPages = async (bookId, startPage = 1, limitPage = 20) => {
   try {
     const response = await axios.get(`${BASE_URL}/book/pages/${bookId}/${startPage}/${limitPage}`);
     return response.data;

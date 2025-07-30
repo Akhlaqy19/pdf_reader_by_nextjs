@@ -41,7 +41,7 @@ export default function ZoomTool() {
     const page = parseInt(englishValue);
 
     if (e.target.value === "") {
-      setCurrentPage("");
+      setCurrentPage(0);
     } else if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
@@ -52,7 +52,7 @@ export default function ZoomTool() {
     const zoomValue = parseInt(englishValue);
 
     if (e.target.value === "") {
-      setZoom("");
+      setZoom(0);
     } else if (zoomValue > 0) {
       setZoom(zoomValue);
     }
