@@ -32,7 +32,7 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
   return (
     <>
       <aside
-        className={`absolute left-0 top-16 h-screen bg-white dark:bg-gray-900 w-84 xs:w-104.5 overflow-y-auto transition-transform duration-300 ${
+        className={`absolute left-0 top-16 min-h-screen bg-white dark:bg-gray-900 w-84 xs:w-104.5 overflow-y-auto transition-transform duration-300 ${
           hasOpenPanel ? "translate-x-0" : "-translate-x-full"
         } ${specialClesses}`}
       >

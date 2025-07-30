@@ -42,15 +42,15 @@ export default function ToolBar({ }) {
       <nav className="z-50 fixed top-0 left-0 flex items-center justify-between w-full bg-white dark:bg-gray-800 min-h-13 max-h-16 px-8.5 py-3 border-b border-[#E9E9E9] dark:border-gray-700">
         {/* Logo and Book name */}
         {/*  */}
-        <div className="flex items-center justify-between gap-3.5 w-48.5 xs:w-65">
+        <div className="flex flex-1 items-center gap-3.5 w-48.5 xs:w-65">
           {/* Logo Image */}
           <div className="">
-            <Logo className="w-10" />
+            <Logo className="w-10 fill-[#484C52] dark:fill-gray-50" />
           </div>
 
           {/* Book Name */}
           <div className="">
-            <h1 className="font-inter font-bold tracking-widest min-w-max text-gray-900 dark:text-white">
+            <h1 className="font-inter font-bold tracking-widest xs:max-w-100 truncate text-gray-900 dark:text-white">
               {title}
             </h1>
           </div>

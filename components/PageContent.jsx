@@ -26,14 +26,14 @@ export default function PageContent() {
   }, [currentPage]);
 
   return (
-    <div className="absolute xs:w-235 xs:top-21 xs:right-8 xs:bottom-0 bg-white overflow-y-auto">
+    <div className="absolute xs:w-235 xs:top-21 xs:right-8 xs:bottom-0 bg-white dark:bg-gray-900 overflow-y-auto">
       <div 
-        className="p-6 text-justify leading-relaxed"
+        className="p-6 text-justify leading-relaxed text-gray-900 dark:text-gray-100"
         style={{ fontSize: `${zoom}%` }}
       >
         {loading ? (
           <div className="flex justify-center items-center h-32">
-            <span>در حال بارگذاری...</span>
+            <span className="text-gray-600 dark:text-gray-400">در حال بارگذاری...</span>
           </div>
         ) : (
           <div dangerouslySetInnerHTML={{ __html: pageContent }} />

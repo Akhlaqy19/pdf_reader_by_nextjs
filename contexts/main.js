@@ -1,7 +1,6 @@
 "use client";
 
 import { createContext, useState } from "react";
-// import {getBookInfo} from "@/actions/api";
 
 export const BookData = createContext(null);
 
@@ -54,47 +53,26 @@ const initialPanels = [
 
 export const PageContext = createContext(null);
 
-export function Providers({ children }) {
+export function DataProviders({ children }) {
   const [panels, setPanels] = useState(initialPanels);
   const [bookData, setBookData] = useState(initBookData);
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(100);
 
   return (
-    <BookData.Provider value={{ bookData, setBookData }}>
-      <SelectedPanel.Provider value={{ panels, setPanels }}>
-        <PageContext.Provider
-          value={{
-            currentPage,
-            setCurrentPage,
-            zoom,
-            setZoom,
-          }}
-        >
-          {children}
-        </PageContext.Provider>
-      </SelectedPanel.Provider>
-    </BookData.Provider>
+      <BookData.Provider value={{ bookData, setBookData }}>
+        <SelectedPanel.Provider value={{ panels, setPanels }}>
+          <PageContext.Provider
+            value={{
+              currentPage,
+              setCurrentPage,
+              zoom,
+              setZoom,
+            }}
+          >
+            {children}
+          </PageContext.Provider>
+        </SelectedPanel.Provider>
+      </BookData.Provider>
   );
 }
-
-
-// export function Providers({ children }) {
-//   return (
-//     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-//       <BookData.Provider value={{ bookData, setBookData }}>
-//       <SelectedPanel.Provider value={{ panels, setPanels }}>
-//         <PageContext.Provider
-//           value={{
-//             currentPage,
-//             setCurrentPage,
-//             zoom,
-//             setZoom,
-//           }}
-//       {children}>
-//         </PageContext.Provider>
-//             </SelectedPanel.Provider>
-//     </BookData.Provider>
-//     </ThemeProvider>
-//   );
-// }

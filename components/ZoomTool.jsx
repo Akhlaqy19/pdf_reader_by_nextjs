@@ -65,7 +65,7 @@ export default function ZoomTool() {
   return (
     <>
       {/* Pagination and Zooming */}
-      <div className="flex items-center divide-x-2 divide-secondary-gray **:text-black **:dark:text-white">
+      <div className="flex flex-1 items-center divide-x-2 divide-secondary-gray **:text-black **:dark:text-white">
         <div className="flex items-center pl-6 divide-x-2 divide-secondary-gray">
           <div className="flex items-center gap-x-4.5 pl-1.5">
             <div

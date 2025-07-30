@@ -15,11 +15,11 @@ export default function MenuPanelContent() {
     <>
       <div className="space-y-3">
         <div className="h-8">
-          <h2 className="pr-4.5 text-xl font-bold leading-8">قائمه الکتاب</h2>
+          <h2 className="pr-4.5 text-xl font-bold leading-8 text-gray-900 dark:text-white">قائمه الکتاب</h2>
         </div>
 
         <div className="w-full">
-          <ul className="flex flex-col divide-y-1 divide-gray-700">
+          <ul className="flex flex-col divide-y-1 divide-gray-200 dark:divide-gray-700">
             {bookTopics.map((part, i) => (
               <li
                 key={i + 1}
@@ -30,10 +30,10 @@ export default function MenuPanelContent() {
                 }`}
                 onClick={() => setSelectedPartIndex(i + 1)}
               >
-                <Link href="#" className="font-light text-lg">
+                <Link href="#" className="font-light text-lg text-gray-900 dark:text-white">
                   {part.title}
                 </Link>
-                <span>{part.page}</span>
+                <span className="text-gray-600 dark:text-gray-400">{part.page}</span>
               </li>
             ))}
           </ul>

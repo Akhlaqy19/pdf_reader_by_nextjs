@@ -33,20 +33,20 @@ export default function ToolsOptions() {
       {/* Tool options */}
       <div className="flex items-center justify-between gap-x-29">
         <div
+          className={`flex justify-center items-center w-11.5 h-11.5 ${
+            selectedItemId === "menubar" && "bg-light-blue dark:bg-gray-900 rounded-xl"
+          }`}
           onClick={() => {
             handleTogglePanel("menubar");
             selectedItemId = "menubar";
           }}
-          className={`flex justify-center items-center w-11.5 h-11.5 ${
-            selectedItemId === "menubar" && "bg-gray-900 rounded-xl"
-          }`}
         >
           <Menubar className="text-black dark:text-white" />
         </div>
         <div
           className={`
             flex justify-center items-center w-11.5 h-11.5
-            ${selectedItemId === "search" && "bg-gray-900 rounded-xl"}`}
+            ${selectedItemId === "search" && "bg-light-blue dark:bg-gray-900 rounded-xl"}`}
           onClick={() => {
             handleTogglePanel("search");
             selectedItemId = "search";
@@ -57,7 +57,7 @@ export default function ToolsOptions() {
         <div
           className={`
             flex justify-center items-center w-11.5 h-11.5
-            ${selectedItemId === "setting" && "bg-gray-900 rounded-xl"}`}
+            ${selectedItemId === "setting" && "bg-light-blue dark:bg-gray-900 rounded-xl"}`}
           onClick={() => {
             handleTogglePanel("setting");
             selectedItemId = "setting";
