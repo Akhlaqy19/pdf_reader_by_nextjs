@@ -21,10 +21,10 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
   const selectedItemId = selectedPanel ? selectedPanel.id : null;
 
   const specialClesses = clsx({
-    "px-7 pb-43 pt-8": selectedItemId === "info",
-    "px-0 pt-12": selectedItemId === "search",
-    "p-4": selectedItemId === "setting",
-    "pt-11": selectedItemId === "menubar",
+    "min-h-max max-h-256 px-7 pb-43 pt-8 overflow-y-auto": selectedItemId === "info",
+    "min-h-screen max-h-256 px-0 pt-12 overflow-y-auto": selectedItemId === "search",
+    "min-h-[calc(100vh-64px)] p-4": selectedItemId === "setting",
+    "min-h-screen max-h-256 pt-11 overflow-y-auto": selectedItemId === "menubar",
   });
 
   const hasOpenPanel = panels.some((panel) => panel.isOpened);
@@ -32,7 +32,7 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
   return (
     <>
       <aside
-        className={`absolute left-0 top-16 min-h-screen bg-white dark:bg-gray-900 w-84 xs:w-104.5 overflow-y-auto transition-transform duration-300 ${
+        className={`xs:[grid-area:sidebar] fixed absolute left-0 top-16 bg-white dark:bg-gray-900 w-84 xs:w-104.5 transition-transform duration-300 ${
           hasOpenPanel ? "translate-x-0" : "-translate-x-full"
         } ${specialClesses}`}
       >
@@ -42,8 +42,8 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
             key={panel.id}
             className={`transition-all duration-300 ease-in-out ${
               panel.isOpened 
-                ? "opacity-100 translate-y-0" 
-                : "opacity-0 translate-y-2 pointer-events-none absolute top-0 left-0 w-full"
+                ? "opacity-100" 
+                : "opacity-0 pointer-events-none absolute left-0 w-full"
             }`}
           >
             {panel.id === "info" && <InfoPanelContent bookData={bookData} />}

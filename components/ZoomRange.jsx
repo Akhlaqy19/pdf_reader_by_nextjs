@@ -62,6 +62,13 @@ export default function ZoomRange() {
               %{MAX}
             </Typography>
 
+            {/* Typography for the current value (visually on the center) */}
+            <Typography
+                sx={{ cursor: "pointer", fontSize: 16, color: "#9CA3AF" }}
+            >
+              %{val}
+            </Typography>
+
             {/* Typography for the "min" value (visually on the right in RTL) */}
             <Typography
               // variant="body2"

@@ -23,15 +23,16 @@ export default function MenuPanelContent() {
             {bookTopics.map((part, i) => (
               <li
                 key={i + 1}
-                className={`flex items-center justify-between pr-4.5 pl-7 h-12 ${
+                className={`flex items-center justify-between pr-4.5 pl-7 h-12 transition-color duration-300 ease-in-out ${
                   selectedPartIndex === i + 1
                     ? "bg-gray-100 dark:bg-gray-700"
                     : "bg-white dark:bg-gray-800"
                 }`}
                 onClick={() => setSelectedPartIndex(i + 1)}
               >
-                <Link href="#" className="font-light text-lg text-gray-900 dark:text-white">
-                  {part.title}
+                <Link href="#" className="font-light text-lg text-gray-900 dark:text-white truncate" dangerouslySetInnerHTML={{
+                  __html: part.title
+                }}>
                 </Link>
                 <span className="text-gray-600 dark:text-gray-400">{part.page}</span>
               </li>

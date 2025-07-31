@@ -13,7 +13,7 @@ import Minus from "@/public/icons/setting-tools-icons/minus.svg";
 export default function ZoomTool() {
   const router = useRouter();
 
-  const { currentPage, setCurrentPage, zoom, setZoom } =
+  const { currentPage, setCurrentPage, zoom, setZoom, setIsInputFocused } =
     useContext(PageContext);
   const { bookData, setBookData } = useContext(BookData);
   const totalPages = bookData?.pages;
@@ -41,7 +41,7 @@ export default function ZoomTool() {
     const page = parseInt(englishValue);
 
     if (e.target.value === "") {
-      setCurrentPage(0);
+      setCurrentPage(1);
     } else if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
     }
@@ -52,7 +52,7 @@ export default function ZoomTool() {
     const zoomValue = parseInt(englishValue);
 
     if (e.target.value === "") {
-      setZoom(0);
+      setZoom(50);
     } else if (zoomValue > 0) {
       setZoom(zoomValue);
     }
@@ -71,6 +71,7 @@ export default function ZoomTool() {
             <div
               className=""
               onClick={() => {
+                setIsInputFocused(false);
                 setCurrentPage((previousPage) => {
                   return previousPage < totalPages
                     ? previousPage + 1
@@ -96,12 +97,15 @@ export default function ZoomTool() {
               style={{ direction: "ltr" }}
               value={convertEnglishToArabic(currentPage ?? "")}
               onChange={handlePageChange}
-              min={0}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
+              min={1}
               max={totalPages}
             />
             <div
               className=""
               onClick={() => {
+                setIsInputFocused(false);
                 setCurrentPage((previousPage) => {
                   return previousPage > 1 ? previousPage - 1 : previousPage;
                 });

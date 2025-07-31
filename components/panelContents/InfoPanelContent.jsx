@@ -31,7 +31,14 @@ export default function InfoPanelContent({bookData}) {
     const category_title = bookData?.category?.title || "";
     const publisher_title = bookData?.publisher?.title || "";
     const pagesCount = bookData?.pages || 0;
+    const downloadedTypes = bookData?.download_types;
 
+    const baseURL = "https://lib.rafed.net/Books";
+    // if (downloadedTypes.doc) {
+    //     const book_name = downloadedTypes.doc.slice(0, downloadedTypes.doc.indexOf("/"));
+    //
+    //     console.log(`${image.splitText(book_name)}`)
+    // }
     const currentPage = 3;
 
     return (
@@ -87,18 +94,28 @@ export default function InfoPanelContent({bookData}) {
 
             <div className="py-10 border-t border-b border-gray-200 dark:border-gray-700">
                 <ul className="space-y-3">
-                    <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
-                        <Link href={"#"} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل علی Word</Link>
-                        <DocWordIcon className="w-7.5 h-9"/>
-                    </li>
-                    <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
-                        <Link href={"#"} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل الصور PDF</Link>
-                        <PdfImageIcon className="w-7.5 h-9"/>
-                    </li>
-                    <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
-                        <Link href={"#"} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل الملف PDF</Link>
-                        <PdfTextIcon className="w-7.5 h-9"/>
-                    </li>
+                    {downloadedTypes.doc &&
+                        <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
+                            <Link href={`${baseURL}/${downloadedTypes.doc}`} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل علی
+                                Word</Link>
+                            <DocWordIcon className="w-7.5 h-9"/>
+                        </li>
+                    }
+                    {
+                        downloadedTypes.pdfimg &&
+                        <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
+                            <Link href={`${baseURL}/${downloadedTypes.pdfimg}`} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل الصور
+                                PDF</Link>
+                            <PdfImageIcon className="w-7.5 h-9"/>
+                        </li>
+                    }
+                    {downloadedTypes.pdf &&
+                        <li className="flex items-center justify-between pr-3 w-full h-9 bg-gray-100 dark:bg-gray-800 rounded-tr-xlg rounded-br-xlg rounded-tl-xs rounded-tb-xs">
+                            <Link href={`${baseURL}/${downloadedTypes.pdf}`} className="text-blue-600 dark:text-blue-400 font-inter">تنزیل الملف
+                                PDF</Link>
+                            <PdfTextIcon className="w-7.5 h-9"/>
+                        </li>
+                    }
                 </ul>
             </div>
 

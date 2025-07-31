@@ -1,6 +1,7 @@
 import "./globals.css";
 import Providers from "@/app/providers";
 import {DataProviders} from "@/contexts/main";
+import ProgressBar from "@/components/ProgressBar";
 
 export const metadata = {
     title: "PDF Reader for Rafed company",
@@ -11,6 +12,7 @@ export default function RootLayout({children}) {
     return (
         <html lang="fa" dir="rtl" suppressHydrationWarning>
         <body className={``}>
+        <ProgressBar />
         <Providers>
             <DataProviders>
                 {children}

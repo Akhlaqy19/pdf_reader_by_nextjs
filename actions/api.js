@@ -1,4 +1,8 @@
+// "use client"
+
+// import {useContext} from "react";
 import axios from "axios";
+// import {BookData} from "@/contexts/main";
 
 // https://core.rafed.net/api/rest/v1/book/[bookId]
 // https://core.rafed.net/api/rest/v1/book/pages/360/[hitCount]
@@ -6,6 +10,7 @@ import axios from "axios";
 // https://core.rafed.net/api/rest/v1/book/pages/[bookId]/[startPage]/[limitPage]import axios from "axios";
 
 const BASE_URL = "https://core.rafed.net/api/rest/v1";
+// const [bookData, setBookData] = useContext(BookData);
 
 // دریافت اطلاعات کتاب
 export const getBookInfo = async (bookId) => {

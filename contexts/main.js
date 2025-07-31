@@ -58,6 +58,9 @@ export function DataProviders({ children }) {
   const [bookData, setBookData] = useState(initBookData);
   const [currentPage, setCurrentPage] = useState(1);
   const [zoom, setZoom] = useState(100);
+  const [isOnePage, setIsOnePage] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [pagesCache, setPagesCache] = useState({});
 
   return (
       <BookData.Provider value={{ bookData, setBookData }}>
@@ -68,6 +71,12 @@ export function DataProviders({ children }) {
               setCurrentPage,
               zoom,
               setZoom,
+              isOnePage,
+              setIsOnePage,
+              isInputFocused,
+              setIsInputFocused,
+              pagesCache,
+              setPagesCache
             }}
           >
             {children}

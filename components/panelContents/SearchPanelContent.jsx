@@ -1,5 +1,4 @@
 "use client"
-
 import React, {useContext, useState, useEffect, useMemo} from "react";
 import { useParams } from 'next/navigation';
 import FlexSearch from "flexsearch";
@@ -125,7 +124,7 @@ export default function SearchPanelContent() {
                                 <div className="text-sm text-gray-600 dark:text-gray-400">
                                     {searchResults.length} نتیجه یافت شد - نتیجه {currentResultIndex + 1}
                                 </div>
-                                <div className="max-h-60 overflow-y-auto space-y-2">
+                                <div className="flex flex-col gap-y-2 overflow-y-auto">
                                     {searchResults.map((result, index) => (
                                         <div 
                                             key={result.id}

@@ -1,5 +1,5 @@
 import React from "react";
-import PageContent from "@/components/PageContent";
+import PageWrapper from "@/components/PageWrapper";
 import PanelTemplate from "@/components/PanelTemplate";
 import ToolBar from "@/components/ToolBar";
 import {getBookInfo} from "@/actions/api";
@@ -12,11 +12,11 @@ export default async function BookPage({params}) {
     return (
         <>
             {/* wrapper */}
-            <div className="relative">
+            <div className="relative grid xs:[grid-template-areas: 'header_header'_'sidebar_main']">
                 <ToolBar/>
                 <PanelTemplate bookData={bookInfo.data}>
                 </PanelTemplate>
-                <PageContent/>
+                <PageWrapper />
             </div>
         </>
     );
