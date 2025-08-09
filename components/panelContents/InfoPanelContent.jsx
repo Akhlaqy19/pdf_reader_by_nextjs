@@ -56,7 +56,7 @@ export default function InfoPanelContent({bookData}) {
                         className="object-cover"
                     />
                 </div>
-                <div className="flex flex-col justify-start gap-3 max-w-48">
+                <div className="flex flex-col justify-start gap-3 max-w-48 max-md:h-35.5 md:h-36.5">
                     <h1 className="font-inter font-semibold text-base text-black dark:text-white">{title}</h1>
                     <div className="">
                         <ul className="flex flex-col *:flex *:items-center *:gap-x-2 text-xs *:*:last:text-blue-700 dark:*:*:last:text-blue-400 space-y-3 text-gray-700 dark:text-gray-300">

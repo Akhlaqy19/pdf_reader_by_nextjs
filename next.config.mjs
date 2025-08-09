@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // devIndicators: {
+  //   buildActivity: false,
+  // },
+
+  devIndicators: {
+    buildActivityPosition: "bottom-right",
+  },
+
   // darkMode: "class",
   reactStrictMode: true,
   // غیرفعال کردن کش برای development

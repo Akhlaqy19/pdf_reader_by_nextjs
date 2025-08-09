@@ -31,7 +31,7 @@ export default function ToolsOptions() {
   return (
     <>
       {/* Tool options */}
-      <div className="flex items-center justify-between gap-x-29">
+      <div className="md:flex max-md:hidden items-center justify-between gap-x-29">
         <div
           className={`flex justify-center items-center w-11.5 h-11.5 ${
             selectedItemId === "menubar" && "bg-light-blue dark:bg-gray-900 rounded-xl"

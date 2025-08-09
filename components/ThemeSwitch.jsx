@@ -128,6 +128,7 @@ export default function ThemeSwitch() {
                 <FormControlLabel
                     control={
                         <StyledSwitch
+                            checked={resolvedTheme === 'dark'}
                             onChange={handleChange}
                         />
                     }

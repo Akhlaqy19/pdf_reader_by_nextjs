@@ -1,18 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import ZoomOutIcon from "@/public/icons/setting-tools-icons/zoom-out.svg";
 import ZoomInIcon from "@/public/icons/setting-tools-icons/zoom-in.svg";
+import { PageContext } from "@/contexts/main";
 
 export default function ZoomRange() {
   const MIN = 50;
   const MAX = 200;
+  const { zoom, setZoom } = useContext(PageContext);
+  const val = zoom || 100;
 
-  // The order of marks doesn't strictly matter for label="",
-  // but keeping it consistent with min/max helps readability.
   const marks = [
     {
       value: MIN,
@@ -24,19 +25,58 @@ export default function ZoomRange() {
     },
   ];
 
-  const [val, setVal] = useState(100); // Initial value set to 100%
+  const zoomSteps = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
 
   const handleChange = (_, newValue) => {
-    setVal(newValue);
+    setZoom(newValue);
   };
 
   const handleZoomIn = () => {
-    setVal(prev => Math.min(prev + 10, MAX));
+    const currentIndex = zoomSteps.indexOf(val);
+    if (currentIndex < zoomSteps.length - 1) {
+      setZoom(zoomSteps[currentIndex + 1]);
+    }
   };
 
   const handleZoomOut = () => {
-    setVal(prev => Math.max(prev - 10, MIN));
+    const currentIndex = zoomSteps.indexOf(val);
+    if (currentIndex > 0) {
+      setZoom(zoomSteps[currentIndex - 1]);
+    }
   };
+
+  const handleWheel = (e) => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -1 : 1;
+      const currentIndex = zoomSteps.indexOf(val);
+      const newIndex = Math.max(0, Math.min(zoomSteps.length - 1, currentIndex + delta));
+      setZoom(zoomSteps[newIndex]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('wheel', handleWheel, { passive: false });
+    return () => document.removeEventListener('wheel', handleWheel);
+  }, [val]);
+
+    // const handleZoomChange = (e) => {
+    //   const englishValue = convertArabicToEnglish(e.target.value);
+    //   const zoomValue = parseInt(englishValue);
+
+    //   if (e.target.value === "") {
+    //     setZoom(50);
+    //   } else if (zoomValue > 0 && zoomValue <= 200) {
+    //     // محدودیت برای جلوگیری از زوم بیش از حد (سازگار با react-pdf)
+    //     setZoom(zoomValue);
+    //     console.log(
+    //       "Zoom updated to:",
+    //       zoomValue,
+    //       "Scale for react-pdf:",
+    //       zoomValue / 100
+    //     );
+    //   }
+    // };
 
   return (
     <>
@@ -55,24 +95,20 @@ export default function ZoomRange() {
           <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
             {/* Typography for the "max" value (visually on the left in RTL) */}
             <Typography
-              // variant="body2"
-              onClick={() => setVal(MAX)}
+              onClick={() => setZoom(MAX)}
               sx={{ cursor: "pointer", fontSize: 16, color: "#9CA3AF" }}
             >
               %{MAX}
             </Typography>
 
-            {/* Typography for the current value (visually on the center) */}
             <Typography
                 sx={{ cursor: "pointer", fontSize: 16, color: "#9CA3AF" }}
             >
               %{val}
             </Typography>
 
-            {/* Typography for the "min" value (visually on the right in RTL) */}
             <Typography
-              // variant="body2"
-              onClick={() => setVal(MIN)}
+              onClick={() => setZoom(MIN)}
               sx={{ cursor: "pointer", fontSize: 16, color: "#9CA3AF" }}
             >
               %{MIN}

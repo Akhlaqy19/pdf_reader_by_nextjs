@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {styled} from "@mui/material/styles";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,6 +9,7 @@ import InfoBox from "@/components/InfoBox";
 import ZoomRange from "@/components/ZoomRange";
 import {useTheme} from "next-themes";
 import ThemeSwitch from "@/components/ThemeSwitch";
+import {PageContext} from "@/contexts/main";
 
 // const { theme, toggleTheme, setTheme, mounted } = useThemeToggle();
 
@@ -71,9 +72,9 @@ export default function SettingPanelContent() {
 
     const {theme, setTheme} = useTheme();
     const [mounted, setMounted] = useState(false);
-
-    const [isOnePage, setIsOnePage] = useState(false);
-
+    const {isShowAllPages, setIsShowAllPages} = useContext(PageContext);
+    
+    console.log('SettingPanelContent - isShowAllPages:', isShowAllPages);
 
     const playToggleSound = () => {
         // ایجاد صدای کوتاه و ریز
@@ -131,16 +132,18 @@ export default function SettingPanelContent() {
                 <div
                     className="book_info-box flex items-center justify-between p-4 w-full text-sm bg-white dark:bg-gray-800 rounded-lg shadow-sm">
                     <span className="text-xs text-[#111827] dark:text-white">
-                        {isOnePage ? "(صفحة واحدة)" : "(جميع الکتاب)"}
+                        {isShowAllPages ? "(جميع الکتاب)" : "(صفحة واحدة)"}
                     </span>
                     <FormGroup>
                         <FormControlLabel
                             control={<StyledSwitch
                                 sx={{m: 1}}
-                                checked={isOnePage}
+                                checked={isShowAllPages}
                                 onChange={(event) => {
-                                    setIsOnePage(event.target.checked);
+                                    console.log('Switch clicked, new value:', event.target.checked);
+                                    setIsShowAllPages(event.target.checked);
                                     playToggleSound();
+                                    console.log(event.target.checked ? "all pages mode" : "one page mode");
                                 }}
                             />}
                             label=""

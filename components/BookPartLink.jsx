@@ -9,7 +9,7 @@ export default function BookPartLink({ i, text }) {
     <>
       <li
         className={`flex items-center justify-between pr-4.5 pl-7 h-12 ${
-          selectedPartIndex === i + 1 ? "bg-light-blue" : "bg-white"
+          selectedPartIndex === i + 1 ? "bg-light-blue dark:bg-dark-stroke" : "bg-white dark:bg-gray-700"
         }`}
         onClick={() => setSelectedPartIndex(i + 1)}
       >

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import clsx from "clsx";
 import { BookData, SelectedPanel } from "@/contexts/main";
 import InfoPanelContent from "./panelContents/InfoPanelContent";
@@ -20,11 +20,22 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
   const selectedPanel = panels.find((item) => item.isOpened);
   const selectedItemId = selectedPanel ? selectedPanel.id : null;
 
+  const [taskbarHeight, setTaskbarHeight] = useState(0);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const totalScreenHeight = screen.height;
+      const availableScreenHeight = screen.availHeight;
+      const calculatedTaskbarHeight = totalScreenHeight - availableScreenHeight;
+      setTaskbarHeight(calculatedTaskbarHeight);
+    }
+  }, []);
+
   const specialClesses = clsx({
-    "min-h-max max-h-256 px-7 pb-43 pt-8 overflow-y-auto": selectedItemId === "info",
-    "min-h-screen max-h-256 px-0 pt-12 overflow-y-auto": selectedItemId === "search",
+    "min-h-max max-h-256 px-7 pb-43 pt-8": selectedItemId === "info",
+    "min-h-screen max-h-256 px-0 pt-12": selectedItemId === "search",
     "min-h-[calc(100vh-64px)] p-4": selectedItemId === "setting",
-    "min-h-screen max-h-256 pt-11 overflow-y-auto": selectedItemId === "menubar",
+    "min-h-screen max-h-256 pt-11": selectedItemId === "menubar",
   });
 
   const hasOpenPanel = panels.some((panel) => panel.isOpened);
@@ -32,9 +43,12 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
   return (
     <>
       <aside
-        className={`xs:[grid-area:sidebar] fixed absolute left-0 top-16 bg-white dark:bg-gray-900 w-84 xs:w-104.5 transition-transform duration-300 ${
+        className={`xs:[grid-area:sidebar] fixed left-0 top-16 bg-white dark:bg-gray-900 w-84 md:w-[var(--aside-width)] transition-transform duration-300 ${
           hasOpenPanel ? "translate-x-0" : "-translate-x-full"
         } ${specialClesses}`}
+        style={{
+          height: `calc(100vh - 64px - ${taskbarHeight}px)`
+        }}
       >
         {children}
         {panels.map((panel, i) => (

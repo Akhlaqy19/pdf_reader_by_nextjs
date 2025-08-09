@@ -1,0 +1,226 @@
+"use client";
+import React, { useContext, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { BookData, PageContext, SelectedPanel } from "@/contexts/main";
+import { convertEnglishToArabic } from "@/utils/numberConverter";
+
+import Forward from "@/public/icons/setting-tools-icons/forward.svg";
+import Backward from "@/public/icons/setting-tools-icons/backward.svg";
+import Plus from "@/public/icons/setting-tools-icons/plus.svg";
+import Minus from "@/public/icons/setting-tools-icons/minus.svg";
+
+import { HiDotsVertical } from "react-icons/hi";
+// import MenuBarIcon from "@/public/icons/panel-controler-icons/menu-dots.svg";
+import Menubar from "@/public/icons/tools-icons/menubar.svg";
+import SearchIcon from "@/public/icons/tools-icons/search.svg";
+import SettingIcon from "@/public/icons/tools-icons/setting.svg";
+
+export default function BottomTool() {
+  const router = useRouter();
+  const {
+    currentPage,
+    setCurrentPage,
+    zoom,
+    setZoom,
+    setIsInputFocused,
+    applyZoom,
+  } = useContext(PageContext);
+  const { bookData, setBookData } = useContext(BookData);
+  const totalPages = bookData?.pages;
+
+  const [inputValue, setInputValue] = useState("");
+  const [selectedItem, setSelectedItem] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // <<< این state برای کنترل نمایش منو استفاده می‌شود
+
+  const { panels, setPanels } = useContext(SelectedPanel);
+  let selectedItemId;
+
+  const selectedItemIndex = panels.findIndex((panel) => panel.isOpened === true);
+  selectedItemId = selectedItemIndex !== -1 ? panels[selectedItemIndex].id : null;
+
+  const handleTogglePanel = (panelIdToToggle) => {
+    setPanels((prevPanels) =>
+      prevPanels.map((panel) => {
+        if (panel.id === panelIdToToggle) {
+          // If this is the panel we want to toggle, reverse its isOpened status
+          return { ...panel, isOpened: !panel.isOpened };
+        } else {
+          // For other panels, ensure they are closed
+          return { ...panel, isOpened: false };
+        }
+      })
+    );
+  };
+
+
+  useEffect(() => {
+    setInputValue(convertEnglishToArabic(currentPage));
+    if (typeof currentPage === "number" && !isNaN(currentPage)) {
+      // ... (rest of your logic)
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    if (zoom) {
+      applyZoom();
+    }
+  }, [zoom, applyZoom]);
+
+  const applySelect = (which) => {
+    setSelectedItem(which);
+    console.log("selected item", selectedItem);
+    // وقتی آیتمی انتخاب شد، منو را ببند
+    setIsMenuOpen(false);
+  };
+
+  // ... (Your other functions like convertArabicToEnglish, handlePageChange, etc. remain the same)
+  const convertArabicToEnglish = (arabicNumber) => {
+    const englishNumbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    const arabicNumbers = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+    return String(arabicNumber).replace(
+      /[٠-٩]/g,
+      (digit) => englishNumbers[arabicNumbers.indexOf(digit)]
+    );
+  };
+
+  const handlePageChange = (e) => {
+    if (e.key === "Enter") {
+      handlePageBlur();
+    }
+    setInputValue(e.target.value);
+  };
+
+  const handlePageBlur = () => {
+    const englishValue = convertArabicToEnglish(inputValue);
+    const page = parseInt(englishValue, 10);
+
+    if (page >= 1 && page <= totalPages) {
+      setCurrentPage(page);
+    } else {
+      setInputValue(convertEnglishToArabic(currentPage));
+    }
+    setIsInputFocused(false);
+  };
+
+  const handleZoomChange = (e) => {
+    const englishValue = convertArabicToEnglish(e.target.value.replace("%", ""));
+    const zoomValue = parseInt(englishValue, 10);
+
+    if (e.target.value === "") {
+      setZoom(50);
+    } else if (zoomValue > 0 && zoomValue <= 200) {
+      setZoom(zoomValue);
+    }
+  };
+
+  const zoomSteps = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
+
+
+  return (
+    <>
+      {/* Container اصلی نوار ابزار که به عنوان والد برای منوی متحرک عمل می‌کند */}
+      <div className="md:hidden max-md:absolute bottom-0 left-1/2 -translate-x-1/2 w-[calc(100vw-10px)] h-16.25 flex justify-center items-center bg-white dark:bg-gray-800 rounded-t-xxl z-20">
+
+        {/* <<< کانتینر آیکون‌های متحرک */}
+        <div
+          className={`
+            absolute bottom-full left-2.5 mb-3 flex flex-col items-center gap-y-3
+            transition-all duration-300 ease-in-out
+            ${isMenuOpen ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}
+          `}
+        >
+          {/* Setting Icon */}
+          <div
+            className={`flex items-center justify-center size-11.25 rounded-xl bg-light-blue text-dark dark:text-white dark:bg-primary-gray shadow-md ${selectedItem === "setting" ? "border-2 border-dark-stroke" : ""}`}
+            onClick={() => {
+              applySelect("setting");
+              handleTogglePanel("setting");
+              selectedItemId = "setting";
+            }}
+          >
+            <SettingIcon className="min-w-5 min-h-5 text-black dark:text-white" />
+          </div>
+          {/* Search Icon */}
+          <div
+            className={`flex items-center justify-center size-11.25 rounded-xl bg-light-blue text-dark dark:text-white dark:bg-primary-gray shadow-md ${selectedItem === "search" ? "border-2 border-dark-stroke" : ""}`}
+            onClick={() => {
+              applySelect("search")
+              handleTogglePanel("search");
+              selectedItemId = "search";
+            }
+            }
+
+          >
+            <SearchIcon className="min-w-5 min-h-5 text-black dark:text-white" />
+          </div>
+          {/* Menu Icon */}
+          <div
+            className={`flex items-center justify-center size-11.25 rounded-xl bg-light-blue text-dark dark:text-white dark:bg-primary-gray shadow-md ${selectedItem === "menu" ? "border-2 border-dark-stroke" : ""}`}
+            onClick={() => {
+              applySelect("menu")
+              handleTogglePanel("menubar");
+              selectedItemId = "menubar";
+            }}
+
+          >
+            <Menubar className="min-w-5 min-h-5 text-black dark:text-white" />
+          </div>
+        </div>
+
+        {/* Pagination and Zooming Controls */}
+        <div className="flex items-center divide-x-2 divide-secondary-gray">
+          {/* Pagination */}
+          <div className="flex items-center pl-6 divide-x-2 divide-secondary-gray">
+            <div className="flex items-center gap-x-4.5 pl-1.5">
+              <div onClick={() => setCurrentPage((p) => (p < totalPages ? p + 1 : p))}>
+                <Forward className="cursor-pointer text-black dark:text-white" />
+              </div>
+              <span className="text-xl font-irancell font-semibold text-black dark:text-white">
+                {convertEnglishToArabic(totalPages)}
+              </span>
+            </div>
+            <div className="flex items-center gap-x-3 pr-1.5">
+              <input
+                type="text"
+                className="w-11 h-7.5 text-center rounded-lg inset-shadow-input text-black dark:text-white bg-transparent"
+                value={inputValue}
+                onChange={handlePageChange}
+                onKeyDown={(e) => { if (e.key === "Enter") handlePageBlur(); }}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={handlePageBlur}
+              />
+              <div onClick={() => setCurrentPage((p) => (p > 1 ? p - 1 : p))}>
+                <Backward className="cursor-pointer text-black dark:text-white" />
+              </div>
+            </div>
+          </div>
+          {/* Zooming */}
+          <div className="flex items-center gap-x-3 pr-6">
+            <div onClick={() => setZoom((z) => { const i = zoomSteps.indexOf(z); return i < zoomSteps.length - 1 ? zoomSteps[i + 1] : z; })}>
+              <Plus className="cursor-pointer text-black dark:text-white" />
+            </div>
+            <input
+              type="text"
+              onChange={handleZoomChange}
+              value={convertEnglishToArabic(zoom ?? "") + "%"}
+              className="w-13.5 h-7.5 text-center font-bold rounded-lg inset-shadow-input text-black dark:text-white bg-transparent"
+            />
+            <div onClick={() => setZoom((z) => { const i = zoomSteps.indexOf(z); return i > 0 ? zoomSteps[i - 1] : z; })}>
+              <Minus className="cursor-pointer text-black dark:text-white" />
+            </div>
+          </div>
+        </div>
+
+        {/* <<< دکمه اصلی برای باز و بسته کردن منو */}
+        <div
+          className={`absolute left-2.5 flex items-center justify-center min-w-11.5 min-h-11.5 rounded-xl cursor-pointer ${isMenuOpen || selectedItem === "bar" ? "bg-light-blue" : ""}`}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          <HiDotsVertical className="min-w-1.5 min-h-5 text-black dark:text-white" />
+        </div>
+      </div>
+
+      {/* <<< این سه div حذف شدند چون به داخل کانتینر متحرک منتقل شدند */}
+    </>
+  );
+}
