@@ -17,10 +17,12 @@ export default async function BookPage({ params }) {
                 <div className="relative min-w-screen min-h-max">
                     <ToolBar />
                     <main className="absolute top-16 min-h-max min-w-screen grid xs:[grid-template-areas: 'sidebar_main'] xs:grid-cols-[var(--aside-width)_1fr]">
-                        <div className="flex items-stretch min-h-max h-full">
+                        <div className="z-10 flex items-stretch min-h-max h-full">
                             <PanelTemplate bookData={bookInfo.data}>
                             </PanelTemplate>
-                            <PageWrapper />
+                            <div className="flex-1 flex justify-center items-start overflow-hidden" style={{minWidth: 'calc(100vw - var(--aside-width) - 20px)'}}>
+                                <PageWrapper />
+                            </div>
                         </div>
                         <BottomTool />
 

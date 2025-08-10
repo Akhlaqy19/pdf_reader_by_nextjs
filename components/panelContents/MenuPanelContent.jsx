@@ -23,7 +23,7 @@ export default function MenuPanelContent() {
                     </h2>
                 </div>
 
-                <div className="panel-list w-full overflow-y-auto max-h-screen">
+                <div className="panel-list w-full h-[calc(100vh-140px)] overflow-y-auto scrollbar-thin">
                     <ul className="flex flex-col divide-y-1 divide-gray-200 dark:divide-gray-700">
                         {bookTopics.map((part, i) => (
                             <li

@@ -17,53 +17,52 @@ export default function PanelTemplate({ bookData: bookDataProp, children }) {
 
   const { panels, setPanels } = useContext(SelectedPanel);
 
-  const selectedPanel = panels.find((item) => item.isOpened);
-  const selectedItemId = selectedPanel ? selectedPanel.id : null;
 
-  const [taskbarHeight, setTaskbarHeight] = useState(0);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const totalScreenHeight = screen.height;
-      const availableScreenHeight = screen.availHeight;
-      const calculatedTaskbarHeight = totalScreenHeight - availableScreenHeight;
-      setTaskbarHeight(calculatedTaskbarHeight);
-    }
-  }, []);
-
-  const specialClesses = clsx({
-    "min-h-max max-h-256 px-7 pb-43 pt-8": selectedItemId === "info",
-    "min-h-screen max-h-256 px-0 pt-12": selectedItemId === "search",
-    "min-h-[calc(100vh-64px)] p-4": selectedItemId === "setting",
-    "min-h-screen max-h-256 pt-11": selectedItemId === "menubar",
-  });
-
-  const hasOpenPanel = panels.some((panel) => panel.isOpened);
+  // پنل Menu همیشه باز است
+  const hasOpenPanel = true;
 
   return (
     <>
       <aside
-        className={`xs:[grid-area:sidebar] fixed left-0 top-16 bg-white dark:bg-gray-900 w-84 md:w-[var(--aside-width)] transition-transform duration-300 ${
-          hasOpenPanel ? "translate-x-0" : "-translate-x-full"
-        } ${specialClesses}`}
+        className="xs:[grid-area:sidebar] fixed left-0 top-16 bg-white dark:bg-gray-900 w-84 md:w-[var(--aside-width)] translate-x-0"
         style={{
-          height: `calc(100vh - 64px - ${taskbarHeight}px)`
+          height: 'calc(100vh - 64px)'
         }}
       >
         {children}
-        {panels.map((panel, i) => (
+        
+        {/* همه پنلها - با z-index مدیریت میشوند */}
+        {panels.map((panel) => (
           <div
             key={panel.id}
-            className={`transition-all duration-300 ease-in-out ${
+            className={`absolute top-0 left-0 w-full h-full bg-white dark:bg-gray-900 ${
               panel.isOpened 
-                ? "opacity-100" 
-                : "opacity-0 pointer-events-none absolute left-0 w-full"
+                ? 'opacity-100 pointer-events-auto' 
+                : 'opacity-0 pointer-events-none'
             }`}
+            style={{ zIndex: panel.zIndex }}
           >
-            {panel.id === "info" && <InfoPanelContent bookData={bookData} />}
-            {panel.id === "search" && <SearchPanelContent />}
-            {panel.id === "setting" && <SettingPanelContent />}
-            {panel.id === "menubar" && <MenuPanelContent />}
+            {panel.id === "menubar" && (
+              <div className="h-full overflow-hidden pt-11">
+                <MenuPanelContent />
+              </div>
+            )}
+            {panel.id === "info" && (
+              <div className="h-full overflow-y-auto scrollbar-thin px-7 pb-4 pt-8">
+                <InfoPanelContent bookData={bookData} />
+              </div>
+            )}
+            {panel.id === "search" && (
+              <div className="h-full overflow-y-auto scrollbar-thin px-0 pt-12">
+                <SearchPanelContent />
+              </div>
+            )}
+            {panel.id === "setting" && (
+              <div className="h-full overflow-y-auto scrollbar-thin p-4">
+                <SettingPanelContent />
+              </div>
+            )}
           </div>
         ))}
       </aside>

@@ -4,9 +4,9 @@ const nextConfig = {
   //   buildActivity: false,
   // },
 
-  devIndicators: {
-    buildActivityPosition: "bottom-right",
-  },
+  // devIndicators: {
+  //   buildActivityPosition: "bottom-right",
+  // },
 
   // darkMode: "class",
   reactStrictMode: true,

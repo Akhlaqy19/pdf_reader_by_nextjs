@@ -11,21 +11,33 @@ export default function ToolsOptions() {
   const { panels, setPanels } = useContext(SelectedPanel);
   let selectedItemId;
 
-  const selectedItemIndex = panels.findIndex((panel) => panel.isOpened === true);
-  selectedItemId = selectedItemIndex !== -1 ? panels[selectedItemIndex].id : null;
+  // پنل با بالاترین zIndex را انتخاب میکنیم
+  const topPanel = panels.filter(p => p.isOpened).sort((a, b) => b.zIndex - a.zIndex)[0];
+  selectedItemId = topPanel ? topPanel.id : 'menubar';
 
   const handleTogglePanel = (panelIdToToggle) => {
-    setPanels((prevPanels) =>
-      prevPanels.map((panel) => {
+    setPanels((prevPanels) => {
+      const maxZIndex = Math.max(...prevPanels.map(p => p.zIndex));
+      const targetPanel = prevPanels.find(p => p.id === panelIdToToggle);
+      
+      return prevPanels.map((panel) => {
         if (panel.id === panelIdToToggle) {
-          // If this is the panel we want to toggle, reverse its isOpened status
-          return { ...panel, isOpened: !panel.isOpened };
-        } else {
-          // For other panels, ensure they are closed
-          return { ...panel, isOpened: false };
+          // اگر پنل Menu است
+          if (panel.isPermanent) {
+            return { ...panel, zIndex: maxZIndex + 1 };
+          }
+          
+          // اگر پنل باز است و بالاترین zIndex را دارد، آن را ببند
+          if (panel.isOpened && panel.zIndex === maxZIndex) {
+            return { ...panel, isOpened: false, zIndex: 0 };
+          }
+          
+          // در غیر این صورت پنل را باز کن و بالاترین zIndex بده
+          return { ...panel, isOpened: true, zIndex: maxZIndex + 1 };
         }
-      })
-    );
+        return panel;
+      });
+    });
   };
 
   return (

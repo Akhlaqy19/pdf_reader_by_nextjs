@@ -35,18 +35,18 @@ export default function PageContent({ image, content }) {
         <div className="relative w-full mx-0" >
             <div className="zoom-wrapper flex justify-center items-center">
                 <div
-                    className="page-content book_page mb-20 pb-16 w-full xs:min-h-max xs:max-h-374 lg:w-[55rem] text-justify bg-white text-dark dark:bg-gray-900 dark:text-[#f9faf8] shadow-[0px_0px_20px_#e9e9e9] dark:shadow-[0px_0px_20px_#181818] border dark:border-gray-600 border-gray-200 relative flex justify-center items-center"
+                    className={`page-content book_page mb-20 ${pdfMode === "text" ? "pb-16" : ""} w-full xs:min-h-max xs:max-h-374 lg:w-[55rem] text-justify bg-white text-dark dark:bg-gray-900 dark:text-[#f9faf8] shadow-[0px_0px_20px_#e9e9e9] dark:shadow-[0px_0px_20px_#181818] border dark:border-gray-600 border-gray-200 relative flex justify-center items-center`}
                 >
                     {/* آیکون تبدیل حالت - همیشه نمایش داده میشود */}
                     <div
-                        className={`flex justify-center items-center xs:w-15 xs:h-11 absolute top-21.5 bg-light-blue cursor-pointer ${specialStyles}`}
+                        className={`flex justify-center items-center xs:w-15 xs:h-11 absolute top-21.5 bg-light-blue dark:bg-gray-700 cursor-pointer ${specialStyles} z-10`}
                         onClick={() => {
                             setPdfMode(pdfMode === "text" ? "image" : "text");
                             console.log('Clicked to change PDF mode:', pdfMode)
                         }}
                     >
-                        {pdfMode === "text" ? <ConvertToImgIcon /> :
-                            <GrDocumentText size={30} color="black" />
+                        {pdfMode === "text" ? <ConvertToImgIcon className="dark:invert" /> :
+                            <GrDocumentText size={30} className="text-black dark:text-white" />
                         }
                     </div>
 
@@ -72,7 +72,17 @@ export default function PageContent({ image, content }) {
                         </div>
                     ) : (
                         image ? (
-                            <Image src={image} width={100} height={100} alt="Page content" className="w-full h-auto" />
+                            <div className="w-full h-full flex justify-center items-center">
+                                <Image 
+                                    src={image} 
+                                    width={0} 
+                                    height={0} 
+                                    sizes="100vw"
+                                    alt="Page content" 
+                                    className="w-full h-full object-contain" 
+                                    unoptimized
+                                />
+                            </div>
                         ) : (
                             <div className="flex justify-center items-center h-full">
                                 <span className="text-gray-600 dark:text-gray-400">تصویر موجود نیست</span>

@@ -9,7 +9,8 @@ import InfoBox from "@/components/InfoBox";
 import ZoomRange from "@/components/ZoomRange";
 import {useTheme} from "next-themes";
 import ThemeSwitch from "@/components/ThemeSwitch";
-import {PageContext} from "@/contexts/main";
+import {PageContext, SelectedPanel} from "@/contexts/main";
+import CloseIcon from "@/public/icons/panel-controler-icons/close.svg";
 
 // const { theme, toggleTheme, setTheme, mounted } = useThemeToggle();
 
@@ -27,7 +28,7 @@ const StyledSwitch = styled(Switch)(({theme}) => {
 
         "& .MuiSwitch-switchBase": {
             padding: 4, // padding برای thumb
-            transitionDuration: "300ms",
+            transitionDuration: "150ms",
 
             "&.Mui-checked": {
                 transform: `translateX(${travelDistance}px)`,
@@ -62,7 +63,7 @@ const StyledSwitch = styled(Switch)(({theme}) => {
             opacity: 1,
             height: trackHeight,
             transition: theme.transitions.create(["background-color"], {
-                duration: 300,
+                duration: 150,
             }),
         },
     };
@@ -73,8 +74,17 @@ export default function SettingPanelContent() {
     const {theme, setTheme} = useTheme();
     const [mounted, setMounted] = useState(false);
     const {isShowAllPages, setIsShowAllPages} = useContext(PageContext);
+    const {panels, setPanels} = useContext(SelectedPanel);
     
     console.log('SettingPanelContent - isShowAllPages:', isShowAllPages);
+    
+    const closePanel = () => {
+        setPanels((prevPanels) =>
+            prevPanels.map((panel) =>
+                panel.id === "setting" ? {...panel, isOpened: false, zIndex: 0} : panel
+            )
+        );
+    };
 
     const playToggleSound = () => {
         // ایجاد صدای کوتاه و ریز
@@ -97,6 +107,14 @@ export default function SettingPanelContent() {
 
 
     return (<>
+            {/* Header با آیکون بستن */}
+            <div className="flex items-center justify-between pb-4 mb-6 border-b border-gray-200 dark:border-gray-700">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">تنظیمات</h3>
+                <div className="cursor-pointer text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" onClick={closePanel}>
+                    <CloseIcon className="min-w-5 min-h-5" />
+                </div>
+            </div>
+            
             <div className="flex flex-col gap-y-3">
                 <h3 className="mt-6 text-gray-500 dark:text-gray-300 text-lg font-normal ps-5">
                     إضاءة الخلفية

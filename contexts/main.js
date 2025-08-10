@@ -44,10 +44,10 @@ const initBookData = {
 export const SelectedPanel = createContext(null);
 
 const initialPanels = [
-    {id: "search", isOpened: false, isClosed: false},
-    {id: "setting", isOpened: false, isClosed: false},
-    {id: "menubar", isOpened: true, isClosed: false},
-    {id: "info", isOpened: false, isClosed: false},
+    {id: "search", isOpened: false, zIndex: 0},
+    {id: "setting", isOpened: false, zIndex: 0},
+    {id: "menubar", isOpened: true, isPermanent: true, zIndex: 1}, // همیشه باز
+    {id: "info", isOpened: false, zIndex: 0},
 ];
 
 export const PageContext = createContext(null);

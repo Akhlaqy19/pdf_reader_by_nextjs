@@ -9,8 +9,18 @@ const config = {
     styled: true,
     utils: true,
     prefix: '',
-    logs: true,
+    logs: false,
     themeRoot: ':root',
+  },
+  theme: {
+    extend: {
+      transitionDuration: {
+        'DEFAULT': '150ms',
+      },
+      transitionTimingFunction: {
+        'DEFAULT': 'ease',
+      },
+    },
   },
 }
 

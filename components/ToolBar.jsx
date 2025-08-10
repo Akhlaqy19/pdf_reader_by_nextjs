@@ -41,7 +41,7 @@ export default function ToolBar({ }) {
 
   return (
     <>
-      <nav className="z-50 fixed top-0 left-0 flex items-center justify-between w-full bg-white dark:bg-gray-800 min-h-13 max-h-16 px-8.5 py-3 border-b border-[#E9E9E9] dark:border-gray-700">
+      <nav className="z-50 fixed top-0 left-0 flex items-center justify-between w-full bg-white dark:bg-gray-800 min-h-13 max-h-16 px-8.5 py-3 border-b border-[#E9E9E9] dark:border-gray-700 transition-none">
         {/* Logo and Book name */}
         {/*  */}
         <div className="flex flex-1 items-center gap-3.5 w-48.5 xs:w-65">

@@ -56,6 +56,46 @@ html {
   @apply box-border m-0 p-0;
 }
 
+/* انیمیشن هماهنگ برای تغییر تم - همه المانها */
+*,
+*::before,
+*::after {
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease !important;
+}
+
+/* انیمیشن صفحات کتاب */
+.page-content, .book_page, .book-page {
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* انیمیشن تصاویر در حالت تاریک */
+.dark .pgcontent img {
+  filter: hue-rotate(345deg) sepia(100%) invert(91.4%);
+  transform: scale(1.15);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+.dark .page-content img {
+  filter: hue-rotate(345deg) sepia(100%) invert(91.4%);
+  transition: filter 0.15s ease;
+}
+
+.pgcontent img,
+.page-content img {
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+
+/* انیمیشن پنلها و کارت ها */
+aside, .card, .book_info-box {
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* انیمیشن متن و رنگها */
+.text-gray-900, .dark\:text-white, .text-gray-600, .dark\:text-gray-300,
+.text-dark, .dark\:text-\[\#f9faf8\], .book_page p {
+  transition: color 0.15s ease;
+}
+
 body {
   @apply relative min-h-screen w-full text-base overflow-x-hidden;
   /*scrollbar-color: #737373 #cecece;*/
@@ -88,6 +128,7 @@ body::-webkit-scrollbar-thumb:hover,
     background: #555;
 } */
 
+/* مخفی کردن Next.js toast */
 .nextjs-toast,
 .nextjs-toast * {
     display: none !important;
@@ -128,7 +169,41 @@ ul {
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  /*scrollbar-color: var(--scrollbar-thumb, initial) var(--scrollbar-track, initial);*/
+  scrollbar-color: #888 #f1f1f1;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: #555 #2d3748;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background: #2d3748;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #777;
 }
 
 .panel-height {
@@ -148,11 +223,7 @@ ul {
   @apply w-full;
 }
 
-.dark .pgcontent img,
-.dark .page-content img {
-  filter: hue-rotate(345deg) sepia(100%) invert(91.4%);
-  transform: scale(1.15);
-}
+/* انیمیشن تصاویر حذف شد - در بالا تعریف شده */
 
 .book-page {
   @apply flex flex-col items-center justify-between min-h-120 mt-auto px-4 pt-16 font-takrim leading-[2.25rem] lg:px-[8rem];
@@ -316,54 +387,111 @@ p.rfdVar0 {
   font-weight: 700;
 }
 
-
-/* انیمیشن برای ظاهر شدن آیکون‌ها */
+/* انیمیشن برای ظاهر شدن آیکونها */
 @keyframes slideUp {
   from {
-    transform: translateY(20px); /* شروع انیمیشن از پایین */
-    opacity: 0; /* شروع با شفافیت صفر */
+    transform: translateY(20px);
+    opacity: 0;
   }
   to {
-    transform: translateY(0); /* به محل اولیه برگشتن */
-    opacity: 1; /* شفافیت کامل */
+    transform: translateY(0);
+    opacity: 1;
   }
 }
 
-/* اعمال انیمیشن روی آیکون‌ها */
+/* اعمال انیمیشن روی آیکونها - هماهنگ با بقیه */
 .menu-item {
-  display: none; /* مخفی کردن آیکون‌ها به طور پیش‌فرض */
+  display: none;
   opacity: 0;
-  transform: translateY(20px); /* شروع از پایین */
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(20px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
 .menu-item.open {
   display: block;
-  animation: slideUp 0.3s ease-out forwards; /* انیمیشن برای حرکت */
+  animation: slideUp 0.15s ease-out forwards;
 }
 
-/* انیمیشن برای ظاهر شدن آیکون‌ها */
-@keyframes slideUp {
-  from {
-    transform: translateY(20px); /* شروع انیمیشن از پایین */
-    opacity: 0; /* شروع با شفافیت صفر */
-  }
-  to {
-    transform: translateY(0); /* به محل اولیه برگشتن */
-    opacity: 1; /* شفافیت کامل */
-  }
+/* انیمیشن هماهنگ برای سوئیچها و تاگلها */
+.toggle, .MuiSwitch-root, .MuiSwitch-switchBase, .MuiSwitch-thumb, .MuiSwitch-track {
+  transition: all 0.15s ease !important;
 }
 
-/* اعمال انیمیشن روی آیکون‌ها */
-.menu-item {
-  display: none; /* مخفی کردن آیکون‌ها به طور پیش‌فرض */
-  opacity: 0;
-  transform: translateY(20px); /* شروع از پایین */
-  transition: opacity 0.3s ease, transform 0.3s ease;
+/* انیمیشن برای hover و focus */
+button, input, .cursor-pointer {
+  transition: all 0.15s ease;
 }
 
-.menu-item.open {
-  display: block;
-  animation: slideUp 0.3s ease-out forwards; /* انیمیشن برای حرکت */
+/* انیمیشن فوری برای navbar و کلاسهای خاص */
+nav, 
+nav *, 
+.bg-white, 
+.dark\:bg-gray-800, 
+.dark\:bg-gray-900, 
+.border-gray-700, 
+.dark\:border-gray-700,
+.text-gray-900,
+.dark\:text-white,
+.fill-\[\#484C52\],
+.dark\:fill-gray-50 {
+  transition: background-color 0.05s ease, border-color 0.05s ease, color 0.05s ease, fill 0.05s ease !important;
 }
 
+/* غلبه بر transition های DaisyUI و Tailwind */
+.btn,
+.card,
+.navbar,
+.drawer,
+.modal,
+[data-theme] *,
+.theme-controller {
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease !important;
+}
+
+/* غلبه بر transition های MUI */
+.MuiSwitch-root *,
+.MuiSwitch-switchBase,
+.MuiSwitch-thumb,
+.MuiSwitch-track {
+  transition: all 0.15s ease !important;
+  transition-duration: 0.15s !important;
+}
+
+/* غلبه بر transition های پیش‌فرض Tailwind */
+.transition,
+.transition-all,
+.transition-colors,
+.transition-opacity,
+.transition-shadow,
+.transition-transform {
+  transition-duration: 0.15s !important;
+}
+
+/* غلبه کامل بر همه transition ها */
+html *,
+html *::before,
+html *::after {
+  transition-property: background-color, color, border-color, box-shadow, filter, opacity !important;
+  transition-duration: 0.15s !important;
+  transition-timing-function: ease !important;
+}
+
+/* navbar و toolbar سریعتر */
+nav,
+nav *,
+.toolbar,
+.toolbar * {
+  transition-duration: 0.05s !important;
+}
+
+/* حذف transition های اضافی */
+.duration-75,
+.duration-100,
+.duration-150,
+.duration-200,
+.duration-300,
+.duration-500,
+.duration-700,
+.duration-1000 {
+  transition-duration: 0.15s !important;
+}

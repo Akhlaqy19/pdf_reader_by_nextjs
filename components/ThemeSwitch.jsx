@@ -28,7 +28,7 @@ const StyledSwitch = styled(Switch)(({theme}) => {
 
         "& .MuiSwitch-switchBase": {
             padding: 4, // padding برای thumb
-            transitionDuration: "300ms",
+            transitionDuration: "150ms",
 
             "&.Mui-checked": {
                 transform: `translateX(${travelDistance}px)`,
@@ -66,7 +66,7 @@ const StyledSwitch = styled(Switch)(({theme}) => {
             opacity: 1,
             height: trackHeight,
             transition: theme.transitions.create(["background-color"], {
-                duration: 300,
+                duration: 150,
             }),
         },
     };
