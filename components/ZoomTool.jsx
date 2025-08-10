@@ -22,12 +22,10 @@ export default function ZoomTool() {
 
   const [inputValue, setInputValue] = useState("");
 
-  // sync input with currentPage
   useEffect(() => {
     setInputValue(convertEnglishToArabic(currentPage));
   }, [currentPage]);
 
-  // apply zoom when changes
   const prevZoomRef = useRef(zoom);
   useEffect(() => {
     if (zoom && zoom !== prevZoomRef.current) {
@@ -42,22 +40,19 @@ export default function ZoomTool() {
     return String(arabicNumber).replace(/[٠-٩]/g, digit => englishNumbers[arabicNumbers.indexOf(digit)]);
   };
 
-  // robust manual change: call window.pdfNavigator.goTo if present (PageWrapper exposed it)
+  // robust manual navigation: use pdfNavigator API if available, else fallback to setCurrentPage & history
   const manualGoTo = async (page) => {
     const p = Math.max(1, Math.min(totalPages, Number(page) || 1));
     if (window.pdfNavigator && typeof window.pdfNavigator.goTo === "function") {
       try {
         await window.pdfNavigator.goTo(p);
       } catch (e) {
-        // fallback
+        console.warn("pdfNavigator.goTo failed, fallback", e);
         setCurrentPage(p);
-        if (window.location.pathname) {
-          const id = bookData?.id;
-          if (id) window.history.replaceState(null, "", `/book/${id}?page=${p}`);
-        }
+        const id = bookData?.id;
+        if (id) window.history.replaceState(null, "", `/book/${id}?page=${p}`);
       }
     } else {
-      // fallback if API not present
       setCurrentPage(p);
       const id = bookData?.id;
       if (id) window.history.replaceState(null, "", `/book/${id}?page=${p}`);
@@ -109,8 +104,8 @@ export default function ZoomTool() {
 
       <div className="flex items-center gap-x-3 pr-6">
         <div className="cursor-pointer" onClick={() => setZoom((prev) => {
-          const next = zoomSteps.indexOf(prev) + 1;
-          return next < zoomSteps.length ? zoomSteps[next] : prev;
+          const nextIndex = zoomSteps.indexOf(prev) + 1;
+          return nextIndex < zoomSteps.length ? zoomSteps[nextIndex] : prev;
         })}>
           <Plus />
         </div>

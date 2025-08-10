@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useContext } from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import { PageContext } from "@/contexts/main";
@@ -24,8 +24,6 @@ export default function PageContent({ image, content }) {
         { "xs:left-0 rounded-r-xxl": pdfMode === "text" },
         { "xs:right-0 rounded-l-xxl": pdfMode === "image" }
     );
-
-    console.log('Image exists:', image);
 
     const hasContent = content && content.trim() !== '' &&
         !content.match(/<div\s+class=("|')pgcontent("|')\s*>\s*(<span>\s*<\/span>\s*)?<\/div>/gi) &&
@@ -94,3 +92,18 @@ export default function PageContent({ image, content }) {
         </div>
     );
 }
+
+// before {prevScrollTop: 0, wrapperAbsTopBefore: 103.96875, wrapperVisualHeightBefore: 1019.9296875, keepAbsBefore: null}
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 263 after { afterScrollTop: 0, wrapperAbsTopAfter: 103.96875, wrapperVisualHeightAfter: 1019.9296875, visualTotalAfter: 1124 }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 264 computed { minHeight: 1128, delta: null }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\panelContents\SettingPanelContent.jsx: 79 SettingPanelContent - isShowAllPages: false
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\panelContents\SettingPanelContent.jsx: 79 SettingPanelContent - isShowAllPages: false
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 262 before { prevScrollTop: 0, wrapperAbsTopBefore: 103.96875, wrapperVisualHeightBefore: 992.7421875, keepAbsBefore: null }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 263 after { afterScrollTop: 0, wrapperAbsTopAfter: 103.96875, wrapperVisualHeightAfter: 992.7421875, visualTotalAfter: 1097 }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 264 computed { minHeight: 1101, delta: null }
+// before { prevScrollTop: 0, wrapperAbsTopBefore: 103.96875, wrapperVisualHeightBefore: 893.468017578125, keepAbsBefore: null }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 263 after { afterScrollTop: 0, wrapperAbsTopAfter: 103.96875, wrapperVisualHeightAfter: 794.1937866210938, visualTotalAfter: 899 }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 264 computed { minHeight: 903, delta: null }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 262 before { prevScrollTop: 0, wrapperAbsTopBefore: 103.96875, wrapperVisualHeightBefore: 794.1937866210938, keepAbsBefore: null }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 263 after { afterScrollTop: 0, wrapperAbsTopAfter: 103.96875, wrapperVisualHeightAfter: 794.1937866210938, visualTotalAfter: 899 }
+// C: \Users\MSI\Desktop\pdf - reader - by - nextjs\components\PageWrapper.jsx: 264 computed { minHeight: 903, delta: null }
